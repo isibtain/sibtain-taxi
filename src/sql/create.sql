@@ -1,0 +1,193 @@
+
+-- DROP TABLE IF EXISTS `User`;
+-- /*!40101 SET @saved_cs_client     = @@character_set_client */;
+-- /*!50503 SET character_set_client = utf8mb4 */;
+-- CREATE TABLE `User` (
+--   `id` bigint(20) NOT NULL,
+--   `Average_Rating` double DEFAULT NULL,
+--   `Birthdate` tinyblob NOT NULL,
+--   `Email` varchar(255) DEFAULT NULL,
+--   `enabled` bit(1) NOT NULL,
+--   `First_Name` varchar(50) NOT NULL,
+--   `Last_Name` varchar(50) NOT NULL,
+--   `No_of_Ratings` bigint(20) DEFAULT NULL,
+--   `Password` varchar(255) NOT NULL,
+--   `User_Role` varchar(20) DEFAULT 'NONE',
+--   `Username` varchar(20) NOT NULL,
+--   `Address_Id` bigint(20) DEFAULT NULL,
+--   `IdDocument_Id` bigint(20) DEFAULT NULL,
+--   `Phone_Id` bigint(20) DEFAULT NULL,
+--   PRIMARY KEY (`id`),
+--   UNIQUE KEY `UK_seh7nteifndaopocsq9f1w8ia` (`Username`),
+--   KEY `FKhlhub295cnmurpiqhip9hwn0m` (`Address_Id`),
+--   KEY `FK9ltc3o4d7mhmq1hneny5o3onb` (`IdDocument_Id`),
+--   KEY `FKsg8vii3hoe4ony9xhc232spjv` (`Phone_Id`),
+--   CONSTRAINT `FK9ltc3o4d7mhmq1hneny5o3onb` FOREIGN KEY (`IdDocument_Id`) REFERENCES `iddocument` (`Id_Document_Id`),
+--   CONSTRAINT `FKhlhub295cnmurpiqhip9hwn0m` FOREIGN KEY (`Address_Id`) REFERENCES `address` (`id`),
+--   CONSTRAINT `FKsg8vii3hoe4ony9xhc232spjv` FOREIGN KEY (`Phone_Id`) REFERENCES `phone` (`id`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- /*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- DROP TABLE IF EXISTS `Phone`;
+-- /*!40101 SET @saved_cs_client     = @@character_set_client */;
+-- /*!50503 SET character_set_client = utf8mb4 */;
+-- CREATE TABLE `Phone` (
+--   `id` bigint(20) NOT NULL,
+--   `Area` int(11) DEFAULT NULL,
+--   `Number` int(11) DEFAULT NULL,
+--   `Prefix` int(11) DEFAULT NULL,
+--   PRIMARY KEY (`id`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- /*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- DROP TABLE IF EXISTS `address`;
+-- /*!40101 SET @saved_cs_client     = @@character_set_client */;
+-- /*!50503 SET character_set_client = utf8mb4 */;
+-- CREATE TABLE `address` (
+--   `id` bigint(20) NOT NULL,
+--   `city` varchar(255) DEFAULT NULL,
+--   `state` varchar(255) DEFAULT NULL,
+--   `street` varchar(255) DEFAULT NULL,
+--   `zip` varchar(255) DEFAULT NULL,
+--   `Door` varchar(255) DEFAULT NULL,
+--   `ZipCode_Id` bigint(20) DEFAULT NULL,
+--   PRIMARY KEY (`id`),
+--   KEY `FK7om1wu58x18j5bj2owex1vkq8` (`ZipCode_Id`),
+--   CONSTRAINT `FK4opjqai0sdli107jq87vr8266` FOREIGN KEY (`ZipCode_Id`) REFERENCES `zipcode` (`id`),
+--   CONSTRAINT `FK7om1wu58x18j5bj2owex1vkq8` FOREIGN KEY (`ZipCode_Id`) REFERENCES `zipcode` (`id`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- /*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- DROP TABLE IF EXISTS `ZipCode`;
+-- /*!40101 SET @saved_cs_client     = @@character_set_client */;
+-- /*!50503 SET character_set_client = utf8mb4 */;
+-- CREATE TABLE `ZipCode` (
+--   `id` bigint(20) NOT NULL,
+--   `Basic_Code` int(11) DEFAULT NULL,
+--   `Plus_four` int(11) DEFAULT NULL,
+--   PRIMARY KEY (`id`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+--
+-- DROP TABLE IF EXISTS `IdDocument`;
+-- /*!40101 SET @saved_cs_client     = @@character_set_client */;
+-- /*!50503 SET character_set_client = utf8mb4 */;
+-- CREATE TABLE `IdDocument` (
+--   `Id_Document_Id` bigint(20) NOT NULL,
+--   `Document_No` varchar(255) NOT NULL,
+--   `Document_Type` varchar(255) NOT NULL,
+--   `Valid_Through` tinyblob NOT NULL,
+--   PRIMARY KEY (`Id_Document_Id`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+--
+-- DROP TABLE IF EXISTS `Driver`;
+-- /*!40101 SET @saved_cs_client     = @@character_set_client */;
+-- /*!50503 SET character_set_client = utf8mb4 */;
+-- CREATE TABLE `Driver` (
+--   `id` bigint(20) NOT NULL,
+--   `driverApprovalDate` tinyblob,
+--   `drivingExpirationDate` tinyblob NOT NULL,
+--   `drivingLicenseNo` varchar(9) NOT NULL,
+--   `isDriverApproved` bit(1) NOT NULL,
+--   `car_id` bigint(20) DEFAULT NULL,
+--   `user_id` bigint(20) DEFAULT NULL,
+--   PRIMARY KEY (`id`),
+--   KEY `FKtrolnoomy6byn3xanl0r6isxx` (`car_id`),
+--   KEY `FKtiysvbaikv3lcytovlsop4c51` (`user_id`),
+--   CONSTRAINT `FKtiysvbaikv3lcytovlsop4c51` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+--   CONSTRAINT `FKtrolnoomy6byn3xanl0r6isxx` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+--
+-- DROP TABLE IF EXISTS `Car`;
+-- /*!40101 SET @saved_cs_client     = @@character_set_client */;
+-- /*!50503 SET character_set_client = utf8mb4 */;
+-- CREATE TABLE `Car` (
+--   `id` bigint(20) NOT NULL,
+--   `color` varchar(255) NOT NULL,
+--   `makeYear` int(11) NOT NULL,
+--   `manufacturer` varchar(255) NOT NULL,
+--   `maxNoOfPassengers` int(11) NOT NULL,
+--   `model` varchar(255) NOT NULL,
+--   `plateNo` varchar(255) NOT NULL,
+--   PRIMARY KEY (`id`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+--
+-- DROP TABLE IF EXISTS `Trip`;
+-- /*!40101 SET @saved_cs_client     = @@character_set_client */;
+-- /*!50503 SET character_set_client = utf8mb4 */;
+-- CREATE TABLE `Trip` (
+--   `tripId` bigint(20) NOT NULL,
+--   `PaymentType` varchar(255) NOT NULL,
+--   `destination` varchar(255) NOT NULL,
+--   `destinationDate` datetime DEFAULT NULL,
+--   `destinationLat` double NOT NULL,
+--   `destinationLng` double NOT NULL,
+--   `fees` int(11) NOT NULL,
+--   `isFull` bit(1) NOT NULL,
+--   `numberPeople` int(11) NOT NULL,
+--   `origin` varchar(255) NOT NULL,
+--   `originDate` datetime DEFAULT NULL,
+--   `originLat` double NOT NULL,
+--   `originLng` double NOT NULL,
+--   `status` varchar(255) DEFAULT NULL,
+--   `driver_id` bigint(20) DEFAULT NULL,
+--   PRIMARY KEY (`tripId`),
+--   KEY `FKn6yd6w11gxojb1gg55vlqwwfw` (`driver_id`),
+--   CONSTRAINT `FKn6yd6w11gxojb1gg55vlqwwfw` FOREIGN KEY (`driver_id`) REFERENCES `driver` (`id`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+--
+-- DROP TABLE IF EXISTS `passenter_trip`;
+-- /*!40101 SET @saved_cs_client     = @@character_set_client */;
+-- /*!50503 SET character_set_client = utf8mb4 */;
+-- CREATE TABLE `passenter_trip` (
+--   `trip_id` bigint(20) NOT NULL,
+--   `passenger_id` bigint(20) NOT NULL,
+--   PRIMARY KEY (`trip_id`,`passenger_id`),
+--   KEY `FK56u7nmkcoc2rkm15ad2fysn1e` (`passenger_id`),
+--   CONSTRAINT `FK56u7nmkcoc2rkm15ad2fysn1e` FOREIGN KEY (`passenger_id`) REFERENCES `user` (`id`),
+--   CONSTRAINT `FKlc56x4n70od1eenrvdrl1djb8` FOREIGN KEY (`trip_id`) REFERENCES `trip` (`tripId`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+--
+-- DROP TABLE IF EXISTS `Review`;
+-- /*!40101 SET @saved_cs_client     = @@character_set_client */;
+-- /*!50503 SET character_set_client = utf8mb4 */;
+-- CREATE TABLE `Review` (
+--   `id` bigint(20) NOT NULL,
+--   `comment` varchar(255) NOT NULL,
+--   `rating` int(11) NOT NULL,
+--   `tripId` bigint(20) NOT NULL,
+--   `userFromId` bigint(20) NOT NULL,
+--   `userToId` bigint(20) NOT NULL,
+--   PRIMARY KEY (`id`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- DROP TABLE IF EXISTS EMPLOYEE;
+--
+-- create table employee( ID int primary key AUTO_INCREMENT NOT NULL,
+-- 						firstName varchar(25),
+-- 						lastName varchar(25),
+-- 						age BIGINT,
+-- 						employeeNumber BIGINT,
+-- 						title varchar(25)
+-- 					);
+--
+-- DROP TABLE IF EXISTS location;
+--
+-- create table location( ID int primary key AUTO_INCREMENT NOT NULL,
+-- 						street varchar(25),
+-- 						city varchar(25),
+-- 						state varchar(25),
+--  						zip varchar(25)
+-- 					);
+--
+--
+-- ALTER TABLE employee ADD  COLUMN addressId BIGINT;
+-- ALTER TABLE employee ADD CONSTRAINT ADDRESSREL FOREIGN KEY (addressId) REFERENCES location (id);
+--
+-- create table location( ID int primary key AUTO_INCREMENT NOT NULL,
+-- 						street varchar(25),
+-- 						city varchar(25),
+-- 						state varchar(25),
+--  						zip varchar(25)
+-- 					);
+--
